@@ -1,0 +1,19 @@
+<div class="input-group">
+    <div class="input-group__addon">
+        <button click="decreaseQty" class="input-group__button input-group__button--decrease">
+            _
+        </button>
+    </div>
+    <div class="input-group__addon_qty">
+    <input data-bind="value: qty, event:{keyup: changeQty(qty())}, valueUpdate: 'afterkeydown'"
+           type="number"
+           name="qty"
+           id="qty"
+           class="input-group__input input-qty" />
+    </div>
+    <div class="input-group__addon">
+        <button click="increaseQty" class="input-group__button input-group__button--increase">
+            +
+        </button>
+    </div>
+</div>

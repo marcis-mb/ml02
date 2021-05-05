@@ -1,0 +1,31 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// phpcs:disable Magento2.Templates.ThisInTemplate.FoundThis
+
+/**
+ * Product additional attributes template
+ *
+ * @var $block \Magento\Catalog\Block\Product\View\Attributes
+ */
+?>
+<?php
+    $_product = $block->getProduct();
+    $viewModel = $block->getViewModel();
+    $_helper = $this->helper(Magento\Catalog\Helper\Output::class);
+?>
+<?php if ($_additional = $block->getAdditionalData()) :
+    $attributes = $viewModel->getAttributes($_product, $_additional, $_helper);
+    ?>
+    <div class="additional-attributes-wrapper table-wrapper">
+        <ul class="attribute-list">
+            <?php foreach ($attributes as $attribute) : ?>
+                <li class="attribute-label"><span><strong><?= $attribute['label'] ?>: </strong><?= $attribute['data'] ?> </span></li>
+            <?php endforeach; ?>
+        </ul>
+        <?= $block->getChildHtml('', true) ?>
+    </div>
+<?php endif;?>

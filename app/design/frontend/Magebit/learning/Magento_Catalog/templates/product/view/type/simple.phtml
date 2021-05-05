@@ -1,0 +1,32 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php /* @var $block \Magento\Catalog\Block\Product\View\AbstractView */ ?>
+<?php
+$_product = $block->getProduct();
+$viewModel = $block->getViewModel();
+?>
+
+<?php if ($block->displayProductStockStatus()) : ?>
+    <?php if ($_product->isAvailable()) : ?>
+        <div class="stock available" title="<?= $block->escapeHtmlAttr(__('Availability')) ?>">
+            <span>
+                <img src="<?php echo $this->getViewFileUrl('Magento_Catalog::images/checkmark.svg'); ?>"/>
+                <?= $block->escapeHtml(__('In stock')) ?>
+            </span>
+        </div>
+        <div class="stock-amount">
+            <span>
+                <?= $viewModel->getQty($_product) ?>
+                <?= $block->escapeHtml(__('Items available')) ?>
+            </span>
+        </div>
+    <?php else : ?>
+        <div class="stock unavailable" title="<?= $block->escapeHtmlAttr(__('Availability')) ?>">
+            <span><?= $block->escapeHtml(__('Out of stock')) ?></span>
+        </div>
+    <?php endif; ?>
+<?php endif; ?>
