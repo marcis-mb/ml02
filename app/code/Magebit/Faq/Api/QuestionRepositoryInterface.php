@@ -14,26 +14,22 @@ interface QuestionRepositoryInterface
     /**
      * Get question data by id
      *
-     * @param string $id
-     * @param bool $editMode
-     * @param int|null $storeId
-     * @param bool $forceReload
+     * @param int $id
      * @return \Magebit\Faq\Api\Data\QuestionInterface
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function get($id, $editMode = false, $storeId = null, $forceReload = false);
+    public function get($id);
 
     /**
      * Create question
      *
      * @param \Magebit\Faq\Api\Data\QuestionInterface $question
-     * @param bool $saveOptions
      * @return \Magebit\Faq\Api\Data\QuestionInterface
      * @throws \Magento\Framework\Exception\InputException
      * @throws \Magento\Framework\Exception\StateException
      * @throws \Magento\Framework\Exception\CouldNotSaveException
      */
-    public function save(\Magebit\Faq\Api\Data\QuestionInterface $question, $saveOptions = false);
+    public function save(Data\QuestionInterface $question);
 
     /**
      * Get question list
@@ -46,16 +42,14 @@ interface QuestionRepositoryInterface
     /**
      * Delete question
      *
-     * @param \Magento\Cms\Api\Data\BlockInterface $question
+     * @param \Magebit\Faq\Api\Data\QuestionInterface $question
      * @return bool Will returned True if deleted
      * @throws \Magento\Framework\Exception\StateException
      */
 
-    //  * @param \Magebit\Faq\Api\Data\QuestionInterface $question
-    //public function delete(\Magebit\Faq\Api\Data\QuestionInterface $question);
-    public function delete(\Magento\Cms\Api\Data\BlockInterface $question);
+    public function delete(Data\QuestionInterface $question);
     /**
-     * @param string $id
+     * @param int $id
      * @return bool Will returned True if deleted
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      * @throws \Magento\Framework\Exception\StateException

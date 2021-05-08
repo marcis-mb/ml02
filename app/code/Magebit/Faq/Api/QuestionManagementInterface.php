@@ -9,7 +9,23 @@
 namespace Magebit\Faq\Api;
 
 
-class QuestionManagementInterface
+/**
+ * Interface QuestionManagementInterface
+ * @package Magebit\Faq\Api
+ */
+interface QuestionManagementInterface
 {
+
+    /**
+     * Enable Question
+     *
+     */
+    public function enableQuestion();
+
+    /**
+     * Disable Question
+     *
+     */
+    public function disableQuestion();
 
 }

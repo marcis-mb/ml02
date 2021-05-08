@@ -8,8 +8,6 @@
 
 namespace Magebit\Faq\Api\Data;
 
-use \Magento\Framework\Api\CustomAttributesDataInterface;
-
 interface QuestionInterface
 {
     /**#@+
@@ -32,6 +30,7 @@ interface QuestionInterface
         self::QUESTION,
         self::ANSWER,
         self::STATUS,
+        self::POSITION,
         self::UPDATED_AT,
     ];
 

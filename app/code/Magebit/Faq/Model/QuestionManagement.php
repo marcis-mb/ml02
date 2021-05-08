@@ -9,7 +9,46 @@
 namespace Magebit\Faq\Model;
 
 
-class QuestionManagement
+use \Magebit\Faq\Api\QuestionManagementInterface;
+use \Magebit\Faq\Model\ResourceModel\QuestionFactory;
+
+/**
+ * Class QuestionManagement
+ * @package Magebit\Faq\Model
+ */
+class QuestionManagement implements QuestionManagementInterface
 {
+
+    /**
+     * @var QuestionFactory
+     */
+    protected $questionFactory;
+
+
+    /**
+     * QuestionManagement constructor.
+     * @param QuestionFactory $questionFactory
+     */
+    public function __construct(QuestionFactory $questionFactory)
+    {
+        $this->questionFactory = $questionFactory;
+    }
+
+    /**
+     *
+     */
+    public function enableQuestion()
+    {
+        // TODO: Implement enableQuestion() method.
+    }
+
+    /**
+     *
+     */
+    public function disableQuestion()
+    {
+        // TODO: Implement disableQuestion() method.
+    }
+
 
 }

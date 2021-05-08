@@ -9,27 +9,25 @@
 namespace Magebit\Faq\Model;
 
 
-use Magento\Eav\Model\Entity\Attribute\Exception as AttributeException;
-use Magento\Framework\Api\Data\ImageContentInterfaceFactory;
-use Magento\Framework\Api\ImageContentValidatorInterface;
-use Magento\Framework\Api\ImageProcessorInterface;
 use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
-use Magento\Framework\DB\Adapter\ConnectionException;
-use Magento\Framework\DB\Adapter\DeadlockException;
-use Magento\Framework\DB\Adapter\LockWaitException;
-use Magento\Framework\EntityManager\Operation\Read\ReadExtensions;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\CouldNotSaveException;
-use Magento\Framework\Exception\InputException;
-use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
-use Magento\Framework\Exception\StateException;
-use Magento\Framework\Exception\TemporaryState\CouldNotSaveException as TemporaryCouldNotSaveException;
-use Magento\Framework\Exception\ValidatorException;
+
+
+use Magento\Framework\Api\DataObjectHelper;
+use Magento\Framework\App\ObjectManager;
+use Magento\Framework\Reflection\DataObjectProcessor;
+use Magento\Store\Model\StoreManagerInterface;
+use Magento\Framework\EntityManager\HydratorInterface;
 
 use \Magebit\Faq\Api\QuestionRepositoryInterface;
 use \Magebit\Faq\Api\Data\QuestionInterface;
 
+/**
+ * Class QuestionRepository
+ * @package Magebit\Faq\Model
+ */
 class QuestionRepository implements QuestionRepositoryInterface
 {
 
@@ -58,30 +56,45 @@ class QuestionRepository implements QuestionRepositoryInterface
      */
     protected $resourceModel;
 
-protected $inter;
-protected $resource;
+    /**
+     * @var DataObjectProcessor
+     */
+    protected $dataObjectProcessor;
+
+    /**
+     * @var CollectionProcessorInterface
+     */
+    private $collectionProcessor;
 
 
+    /**
+     * QuestionRepository constructor.
+     * @param QuestionFactory $questionFactory
+     * @param \Magebit\Faq\Api\Data\QuestionSearchResultsInterfaceFactory $searchResultsFactory
+     * @param \Magento\Framework\Api\SearchCriteriaBuilder $searchCriteriaBuilder
+     * @param ResourceModel\Question\CollectionFactory $collectionFactory
+     * @param ResourceModel\Question $resourceModel
+     */
     public function __construct(
         QuestionFactory $questionFactory,
         \Magebit\Faq\Api\Data\QuestionSearchResultsInterfaceFactory $searchResultsFactory,
-        \Magebit\Faq\Model\ResourceModel\Question\CollectionFactory $collectionFactory,
         \Magento\Framework\Api\SearchCriteriaBuilder $searchCriteriaBuilder,
-        \Magebit\Faq\Model\ResourceModel\Question $resourceModel,
-        \Magento\Cms\Api\Data\BlockInterface $inter,
-        \Magento\Cms\Model\ResourceModel\Block $resource
+        ResourceModel\Question\CollectionFactory $collectionFactory,
+        ResourceModel\Question $resourceModel
     ){
         $this->questionFactory = $questionFactory;
         $this->collectionFactory = $collectionFactory;
         $this->searchResultsFactory = $searchResultsFactory;
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
         $this->resourceModel = $resourceModel;
+      }
 
-        $this->resource = $resource;
-        $this->inter = $inter;
-    }
-
-    public function get($id, $editMode = false, $storeId = null, $forceReload = false)
+    /**
+     * @param string $id
+     * @return QuestionInterface|Question
+     * @throws NoSuchEntityException
+     */
+    public function get($id)
     {
         $question = $this->questionFactory->create();
         $this->resourceModel->load($question, $id);
@@ -92,51 +105,51 @@ protected $resource;
         return $question;
     }
 
-    public function save(\Magebit\Faq\Api\Data\QuestionInterface $question, $saveOptions = false)
+    /**
+     * @param QuestionInterface $question
+     * @return QuestionInterface
+     * @throws CouldNotSaveException
+     */
+    public function save(\Magebit\Faq\Api\Data\QuestionInterface $question)
     {
-//        if (empty($block->getStoreId())) {
-//            $block->setStoreId($this->storeManager->getStore()->getId());
-//        }
-//
-//        if ($block->getId() && $block instanceof Block && !$block->getOrigData()) {
-//            $block = $this->hydrator->hydrate($this->getById($block->getId()), $this->hydrator->extract($block));
-//        }
-//
-//        try {
-//            $this->resource->save($block);
-//        } catch (\Exception $exception) {
-//            throw new CouldNotSaveException(__($exception->getMessage()));
-//        }
-//        return $block;
+        try {
+            $this->resourceModel->save($question);
+        } catch (\Exception $exception) {
+            throw new CouldNotSaveException(__($exception->getMessage()));
+        }
         return $question;
     }
 
+    /**
+     * @param \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria
+     * @return \Magebit\Faq\Api\Data\QuestionSearchResultsInterface
+     */
     public function getList(\Magento\Framework\Api\SearchCriteriaInterface $searchCriteria)
     {
-//        /** @var \Magento\Cms\Model\ResourceModel\Block\Collection $collection */
-//        $collection = $this->blockCollectionFactory->create();
-//
-//        $this->collectionProcessor->process($criteria, $collection);
-//
-//        /** @var Data\BlockSearchResultsInterface $searchResults */
-//        $searchResults = $this->searchResultsFactory->create();
-//        $searchResults->setSearchCriteria($criteria);
-//        $searchResults->setItems($collection->getItems());
-//        $searchResults->setTotalCount($collection->getSize());
-//        return $searchResults;
+        /** @var \Magebit\Faq\Model\ResourceModel\Question\Collection $collection */
+        $collection = $this->collectionFactory->create();
+
+        $this->collectionProcessor->process($searchCriteria, $collection);
+
+        /** @var \Magebit\Faq\Api\Data\QuestionSearchResultsInterface $searchResults */
+        $searchResults = $this->searchResultsFactory->create();
+        $searchResults->setSearchCriteria($searchCriteria);
+        $searchResults->setItems($collection->getItems());
+        $searchResults->setTotalCount($collection->getSize());
+        return $searchResults;
     }
 
     /**
      * Delete Question
      *
-     * @param \Magento\Cms\Api\Data\BlockInterface $inter
+     * @param \Magebit\Faq\Api\Data\QuestionInterface $question
      * @return bool
      * @throws CouldNotDeleteException
      */
-    public function delete(\Magento\Cms\Api\Data\BlockInterface $inter)
+    public function delete(\Magebit\Faq\Api\Data\QuestionInterface $question)
     {
         try {
-            $this->resource->delete($inter);
+            $this->resourceModel->delete($question);
         } catch (\Exception $exception) {
             throw new CouldNotDeleteException(__($exception->getMessage()));
         }

@@ -27,26 +27,46 @@ use Magento\Framework\Pricing\SaleableInterface;
 
 
 class Question extends AbstractModel implements
-    IdentityInterface,
-    QuestionInterface
+    QuestionInterface,
+    IdentityInterface
 {
+    /**
+     *
+     */
     const CACHE_TAG = 'magebit_faq_question';
 
+    /**
+     * @var bool
+     */
     protected
     $_cacheTag = false;
 
+    /**
+     * @var string
+     */
     protected
     $_eventPrefix = 'magebit_faq_question';
 
+    /**
+     * @var string
+     */
     protected
     $_eventObject = 'question';
 
 
+    /**
+     * Question constructor.
+     * @param \Magento\Framework\Model\Context $context
+     * @param \Magento\Framework\Registry $registry
+     * @param ResourceModel\Question $resource
+     * @param ResourceModel\Question\Collection $resourceCollection
+     * @param array $data
+     */
     public function __construct(
         \Magento\Framework\Model\Context $context,
         \Magento\Framework\Registry $registry,
-        \Magebit\Faq\Model\ResourceModel\Question $resource,
-        \Magebit\Faq\Model\ResourceModel\Question\Collection $resourceCollection,
+        ResourceModel\Question $resource,
+        ResourceModel\Question\Collection $resourceCollection,
         array $data = []
     )
     {
@@ -59,79 +79,106 @@ class Question extends AbstractModel implements
         );
     }
 
+    /**
+     * Construct.
+     *
+     * @return void
+     */
     protected function _construct()
     {
-        $this->_init(Question::class);
+        $this->_init(ResourceModel\Question::class);
     }
 
+    /**
+     * @return array|string[]
+     */
     public function getIdentities()
     {
         return [self::CACHE_TAG . '_' . $this->getId()];
     }
 
+    /**
+     * @return int|mixed|null
+     */
+    public function getId()
+    {
+        return $this->getData(self::ID);
+    }
+
+    /**
+     * @return mixed|null|string
+     */
     public function getQuestion()
     {
-        // TODO: Implement getQuestion() method.
+        return $this->getData(self::QUESTION);
     }
 
+    /**
+     * @param string $question
+     * @return QuestionInterface|Question
+     */
     public function setQuestion($question)
     {
-        // TODO: Implement setQuestion() method.
+        return $this->setData(self::QUESTION, $question);
     }
 
+    /**
+     * @return mixed|null|string
+     */
     public function getAnswer()
     {
-        // TODO: Implement getAnswer() method.
+        return $this->getData(self::ANSWER);
     }
 
+    /**
+     * @param string $answer
+     * @return QuestionInterface|Question
+     */
     public function setAnswer($answer)
     {
-        // TODO: Implement setAnswer() method.
+        return $this->setData(self::ANSWER, $answer);
     }
 
+    /**
+     * @return int|mixed|null
+     */
     public function getStatus()
     {
-        // TODO: Implement getStatus() method.
+        return $this->getData(self::STATUS);
     }
 
+    /**
+     * @param int $status
+     * @return QuestionInterface|Question
+     */
     public function setStatus($status)
     {
-        // TODO: Implement setStatus() method.
+        return $this->setData(self::STATUS, $status);
     }
 
+    /**
+     * @return int|mixed|null
+     */
     public function getPosition()
     {
-        // TODO: Implement getPosition() method.
+        return $this->getData(self::POSITION);
     }
 
+    /**
+     * @param int $position
+     * @return QuestionInterface|Question
+     */
     public function setPosition($position)
     {
-        // TODO: Implement setPosition() method.
+        return $this->setData(self::POSITION, $position);
     }
 
+    /**
+     * @return mixed|null|string
+     */
     public function getUpdatedAt()
     {
-        // TODO: Implement getUpdatedAt() method.
-    }
-
-    public function getCustomAttribute($attributeCode)
-    {
-        // TODO: Implement getCustomAttribute() method.
-    }
-
-    public function setCustomAttribute($attributeCode, $attributeValue)
-    {
-        // TODO: Implement setCustomAttribute() method.
-    }
-
-    public function getCustomAttributes()
-    {
-        // TODO: Implement getCustomAttributes() method.
-    }
-
-    public function setCustomAttributes(array $attributes)
-    {
-        // TODO: Implement setCustomAttributes() method.
+        return $this->getData(self::UPDATED_AT);
     }
 
 

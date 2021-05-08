@@ -14,7 +14,7 @@ use Magento\Catalog\Model\Indexer\Category\Product\TableMaintainer;
 use Magento\Catalog\Model\Indexer\Product\Price\PriceTableResolver;
 use Magento\Catalog\Model\Product\Attribute\Source\Status as ProductStatus;
 use Magento\Catalog\Model\Product\Gallery\ReadHandler as GalleryReadHandler;
-use Magento\Catalog\Model\ResourceModel\Product\Collection\ProductLimitationFactory;
+//use Magento\Catalog\Model\ResourceModel\Product\Collection\ProductLimitationFactory;
 use Magento\CatalogUrlRewrite\Model\ProductUrlRewriteGenerator;
 use Magento\CatalogUrlRewrite\Model\Storage\DbStorage;
 use Magento\Customer\Api\GroupManagementInterface;
@@ -27,8 +27,10 @@ use Magento\Store\Model\Indexer\WebsiteDimensionProvider;
 use Magento\Store\Model\Store;
 use Magento\Catalog\Model\ResourceModel\Category;
 
+use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
 
-class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection
+
+class Collection extends AbstractCollection
 {
     protected $_idFieldName = 'id';
     protected $_eventPrefix = 'magebit_faq_question_collection';
@@ -47,8 +49,8 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
             $logger,
             $fetchStrategy,
             $eventManager,
-            $resource,
-            $connection
+            $connection,
+            $resource
         );
     }
 
