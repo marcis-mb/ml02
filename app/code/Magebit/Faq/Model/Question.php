@@ -9,76 +9,11 @@
 namespace Magebit\Faq\Model;
 
 use Magebit\Faq\Api\Data\QuestionInterface;
-use Magento\Framework\Api\CustomAttributesDataInterface;
 use \Magento\Framework\Model\AbstractModel;
-use Magento\Framework\DataObject\IdentityInterface;
-
-use Magento\Catalog\Api\CategoryRepositoryInterface;
-use Magento\Catalog\Api\Data\ProductAttributeMediaGalleryEntryInterface;
-use Magento\Catalog\Api\Data\ProductInterface;
-use Magento\Catalog\Api\ProductLinkRepositoryInterface;
-use Magento\Catalog\Model\Product\Attribute\Backend\Media\EntryConverterPool;
-use Magento\Catalog\Model\Product\Attribute\Source\Status;
-use Magento\Catalog\Model\Product\Configuration\Item\Option\OptionInterface;
-use Magento\Framework\Api\AttributeValueFactory;
-use Magento\Framework\App\Filesystem\DirectoryList;
-use Magento\Framework\App\ObjectManager;
-use Magento\Framework\Pricing\SaleableInterface;
 
 
-class Question extends AbstractModel implements
-    QuestionInterface,
-    IdentityInterface
+class Question extends AbstractModel implements QuestionInterface
 {
-    /**
-     *
-     */
-    const CACHE_TAG = 'magebit_faq_question';
-
-    /**
-     * @var bool
-     */
-    protected
-    $_cacheTag = false;
-
-    /**
-     * @var string
-     */
-    protected
-    $_eventPrefix = 'magebit_faq_question';
-
-    /**
-     * @var string
-     */
-    protected
-    $_eventObject = 'question';
-
-
-    /**
-     * Question constructor.
-     * @param \Magento\Framework\Model\Context $context
-     * @param \Magento\Framework\Registry $registry
-     * @param ResourceModel\Question $resource
-     * @param ResourceModel\Question\Collection $resourceCollection
-     * @param array $data
-     */
-    public function __construct(
-        \Magento\Framework\Model\Context $context,
-        \Magento\Framework\Registry $registry,
-        ResourceModel\Question $resource,
-        ResourceModel\Question\Collection $resourceCollection,
-        array $data = []
-    )
-    {
-        parent::__construct(
-            $context,
-            $registry,
-            $resource,
-            $resourceCollection,
-            $data
-        );
-    }
-
     /**
      * Construct.
      *
@@ -89,13 +24,6 @@ class Question extends AbstractModel implements
         $this->_init(ResourceModel\Question::class);
     }
 
-    /**
-     * @return array|string[]
-     */
-    public function getIdentities()
-    {
-        return [self::CACHE_TAG . '_' . $this->getId()];
-    }
 
     /**
      * @return int|mixed|null

@@ -9,8 +9,13 @@
 namespace Magebit\Faq\Controller\Adminhtml\Question;
 
 
-use Magento\Framework\App\Action\HttpGetActionInterface;
+use Magento\Framework\View\Result\PageFactory;
+use Magento\Backend\App\Action\Context;
 
+/**
+ * Class Index
+ * @package Magebit\Faq\Controller\Adminhtml\Question
+ */
 class Index extends \Magento\Backend\App\Action
 {
     /**
@@ -23,15 +28,15 @@ class Index extends \Magento\Backend\App\Action
      * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
      */
     public function __construct(
-        \Magento\Backend\App\Action\Context $context,
-        \Magento\Framework\View\Result\PageFactory $resultPageFactory
+        Context $context,
+        PageFactory $resultPageFactory
     ) {
-        parent::__construct($context);
         $this->resultPageFactory = $resultPageFactory;
+        parent::__construct($context);
     }
 
     /**
-     * @return \Magento\Backend\Model\View\Result\Page
+     * @return /Magento\Framework\View\Result\Page
      */
     public function execute()
     {

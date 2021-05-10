@@ -25,14 +25,16 @@ interface QuestionInterface
 
     const UPDATED_AT = 'updated_at';
 
-    const ATTRIBUTES = [
-        self::ID,
-        self::QUESTION,
-        self::ANSWER,
-        self::STATUS,
-        self::POSITION,
-        self::UPDATED_AT,
-    ];
+    const MAIN_TABLE = 'magebit_faq';
+
+//    const ATTRIBUTES = [
+//        self::ID,
+//        self::QUESTION,
+//        self::ANSWER,
+//        self::STATUS,
+//        self::POSITION,
+//        self::UPDATED_AT,
+//    ];
 
     /**#@-*/
 
