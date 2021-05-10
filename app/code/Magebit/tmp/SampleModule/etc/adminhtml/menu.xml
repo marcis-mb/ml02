@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Magebit_SampleModule::magebit" title="Magebit" translate="title" module="Magebit_SampleModule" sortOrder="0"
+             resource="Magento_Backend::content"/>
+        <add id="Magebit_SampleModule::samplemodule" title="Sample Module" translate="title" module="Magebit_SampleModule" sortOrder="0"
+             parent="Magebit_SampleModule::magebit" dependsOnModule="Magebit_SampleModule" action="magebit_samplemodule/index"
+             resource="Magento_Backend::content"/>
+    </menu>
+</config>

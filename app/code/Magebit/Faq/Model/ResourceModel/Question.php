@@ -53,13 +53,13 @@ class Question extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
         $this->_init('magebit_faq', 'id');
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getConnection()
-    {
-        return $this->metadataPool->getMetadata(\Magebit\Faq\Api\Data\QuestionInterface::class)->getEntityConnection();
-    }
+//    /**
+//     * @inheritDoc
+//     */
+//    public function getConnection()
+//    {
+//        return $this->metadataPool->getMetadata(\Magebit\Faq\Api\Data\QuestionInterface::class)->getEntityConnection();
+//    }
 
 
     /**

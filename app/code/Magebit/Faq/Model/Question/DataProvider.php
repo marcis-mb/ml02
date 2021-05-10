@@ -8,116 +8,79 @@
 
 namespace Magebit\Faq\Model\Question;
 
-use Magento\Framework\Api\Filter;
-use Magento\Framework\Api\FilterBuilder;
-use Magento\Framework\Api\Search\SearchCriteriaBuilder;
-use Magento\Framework\App\ObjectManager;
-use Magento\Framework\App\RequestInterface;
-use Magento\Framework\AuthorizationInterface;
-use Magento\Framework\View\Element\UiComponent\DataProvider\Reporting;
+use Magebit\Faq\Model\ResourceModel\Question\CollectionFactory;
+use Magento\Framework\App\Request\DataPersistorInterface;
+use Magento\Ui\DataProvider\Modifier\PoolInterface;
 
-class DataProvider extends \Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider
+class DataProvider extends \Magento\Ui\DataProvider\ModifierPoolDataProvider
 {
     /**
-     * @var AuthorizationInterface
+     * @var \Magebit\Faq\Model\ResourceModel\Question\Collection
      */
-    private $authorization;
-
-//    /**
-//     * @var AddFilterInterface[]
-//     */
-//    private $additionalFilterPool;
+    protected $collection;
 
     /**
+     * @var DataPersistorInterface
+     */
+    protected $dataPersistor;
+
+    /**
+     * @var array
+     */
+    protected $loadedData;
+
+    /**
+     * Constructor
+     *
      * @param string $name
      * @param string $primaryFieldName
      * @param string $requestFieldName
-     * @param Reporting $reporting
-     * @param SearchCriteriaBuilder $searchCriteriaBuilder
-     * @param RequestInterface $request
-     * @param FilterBuilder $filterBuilder
+     * @param CollectionFactory $questionCollectionFactory
+     * @param DataPersistorInterface $dataPersistor
      * @param array $meta
      * @param array $data
-     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
+     * @param PoolInterface|null $pool
      */
     public function __construct(
         $name,
         $primaryFieldName,
         $requestFieldName,
-        Reporting $reporting,
-        SearchCriteriaBuilder $searchCriteriaBuilder,
-        RequestInterface $request,
-        FilterBuilder $filterBuilder,
+        CollectionFactory $questionCollectionFactory,
+        DataPersistorInterface $dataPersistor,
         array $meta = [],
-        array $data = []
-    ) {
-        parent::__construct(
-            $name,
-            $primaryFieldName,
-            $requestFieldName,
-            $reporting,
-            $searchCriteriaBuilder,
-            $request,
-            $filterBuilder,
-            $meta,
-            $data
-        );
-
-        $this->meta = array_replace_recursive($meta, $this->prepareMetadata());
-    }
-
-    /**
-     * Get authorization info.
-     *
-     * @deprecated 101.0.7
-     * @return AuthorizationInterface|mixed
-     */
-    private function getAuthorizationInstance()
+        array $data = [],
+        PoolInterface $pool = null
+    )
     {
-        if ($this->authorization === null) {
-            $this->authorization = ObjectManager::getInstance()->get(AuthorizationInterface::class);
-        }
-        return $this->authorization;
+        $this->collection = $questionCollectionFactory->create();
+        $this->dataPersistor = $dataPersistor;
+        parent::__construct($name, $primaryFieldName, $requestFieldName, $meta, $data, $pool);
     }
 
     /**
-     * Prepares Meta
+     * Get data
      *
      * @return array
      */
-    public function prepareMetadata()
+    public function getData()
     {
-        $metadata = [];
-
-        if (!$this->getAuthorizationInstance()->isAllowed('Magebit_Faq::save')) {
-            $metadata = [
-                'faq_question_columns' => [
-                    'arguments' => [
-                        'data' => [
-                            'config' => [
-                                'editorConfig' => [
-                                    'enabled' => false
-                                ],
-                                'componentType' => \Magento\Ui\Component\Container::NAME
-                            ]
-                        ]
-                    ]
-                ]
-            ];
+        if (isset($this->loadedData)) {
+            return $this->loadedData;
+        }
+        $items = $this->collection->getItems();
+        /** @var \Magebit\Faq\Model\Question $question */
+        foreach ($items as $question) {
+            $this->loadedData[$question->getId()] = $question->getData();
         }
 
-        return $metadata;
-    }
+        $data = $this->dataPersistor->get('faq_question');
+        if (!empty($data)) {
+            $question = $this->collection->getNewEmptyItem();
+            $question->setData($data);
+            $this->loadedData[$question->getId()] = $question->getData();
+            $this->dataPersistor->clear('faq_question');
+        }
 
-//    /**
-//     * @inheritdoc
-//     */
-//    public function addFilter(Filter $filter)
-//    {
-//        if (!empty($this->additionalFilterPool[$filter->getField()])) {
-//            $this->additionalFilterPool[$filter->getField()]->addFilter($this->searchCriteriaBuilder, $filter);
-//        } else {
-//            parent::addFilter($filter);
-//        }
-//    }
+        return $this->loadedData;
+    }
 }
