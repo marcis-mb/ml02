@@ -27,6 +27,7 @@ interface QuestionInterface
 
     const MAIN_TABLE = 'magebit_faq';
 
+
 //    const ATTRIBUTES = [
 //        self::ID,
 //        self::QUESTION,

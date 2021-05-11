@@ -51,13 +51,15 @@ class Index extends Action
         $block = $page->getLayout()->getBlock('magebit.faq.index.layout');
         $question = $this->questionFactory->create();
 
-        $question->setAnswer('Fourth question?');
-        $question->setQuestion('Fourth answer!');
+        $question->setQuestion('Fifth question?');
+        $question->setAnswer('Fifth answer!');
+
 
         $this->questionRepository->save($question);
 
-        //$questionToDelete = $this->questionRepository->get(3);
-        $this->questionRepository->deleteById(3);
+        //$this->questionRepository->deleteById(5);
+        //$this->questionRepository->deleteById(6);
+
 
         $collection = $question->getCollection();
         $block->setData('collection', $collection);

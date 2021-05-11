@@ -14,6 +14,12 @@ use \Magento\Framework\Model\AbstractModel;
 
 class Question extends AbstractModel implements QuestionInterface
 {
+    /**#@+
+     * Block's statuses
+     */
+    const STATUS_ENABLED = 0;
+    const STATUS_DISABLED = 1;
+
     /**
      * Construct.
      *
@@ -109,5 +115,13 @@ class Question extends AbstractModel implements QuestionInterface
         return $this->getData(self::UPDATED_AT);
     }
 
-
+    /**
+     * Prepare block's statuses.
+     *
+     * @return array
+     */
+    public function getAvailableStatuses()
+    {
+        return [self::STATUS_ENABLED => __('Enabled'), self::STATUS_DISABLED => __('Disabled')];
+    }
 }
