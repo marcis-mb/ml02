@@ -34,7 +34,7 @@ use Magebit\Faq\Model\QuestionFactory;
 use Magento\Framework\App\Action\HttpGetActionInterface;
 
 /**
- * Edit CMS block action.
+ * Edit FAQ question action.
  */
 class Edit extends \Magento\Backend\App\Action implements HttpGetActionInterface
 {
@@ -45,23 +45,28 @@ class Edit extends \Magento\Backend\App\Action implements HttpGetActionInterface
 
     protected $questionFactory;
 
+    protected $coreRegistry;
+
     /**
+     * @param \Magento\Framework\Registry $coreRegistry
      * @param \Magento\Backend\App\Action\Context $context
      * @param \Magebit\Faq\Model\QuestionFactory $questionFactory
      * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
+        \Magento\Framework\Registry $coreRegistry,
         \Magento\Framework\View\Result\PageFactory $resultPageFactory,
         \Magebit\Faq\Model\QuestionFactory $questionFactory
     ) {
         $this->resultPageFactory = $resultPageFactory;
         $this->questionFactory = $questionFactory;
+        $this->coreRegistry = $coreRegistry;
         parent::__construct($context);
     }
 
     /**
-     * Edit CMS block
+     * Edit FAQ question
      *
      * @return \Magento\Framework\Controller\ResultInterface
      * @SuppressWarnings(PHPMD.NPathComplexity)
@@ -83,6 +88,8 @@ class Edit extends \Magento\Backend\App\Action implements HttpGetActionInterface
             }
         }
 
+        $this->coreRegistry->register('faq_question', $model);
+
         // 5. Build edit form
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
         $resultPage = $this->resultPageFactory->create();
@@ -90,8 +97,8 @@ class Edit extends \Magento\Backend\App\Action implements HttpGetActionInterface
 //            $id ? __('FAQ Question') : __('New Question'),
 //            $id ? __('FAQ Question') : __('New Question')
 //        );
-        $resultPage->getConfig()->getTitle()->prepend(__('FAQ Question'));
-        $resultPage->getConfig()->getTitle()->prepend($model->getId() ? $model->getTitle() : __('FAQ Question'));
+        $resultPage->getConfig()->getTitle()->prepend(__('FAQ Question Edit'));
+        //$resultPage->getConfig()->getTitle()->prepend($model->getId() ? $model->getTitle() : __('FAQ Question Edit'));
         return $resultPage;
     }
 }

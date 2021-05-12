@@ -2,10 +2,17 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
+        <attribute name="class" value="faq-page"/>
         <referenceContainer name="content">
             <block class="Magento\Framework\View\Element\Template"
                    name="magebit.faq.index.layout"
-                   template="Magebit_Faq::question-list.phtml" />
+                   template="Magebit_Faq::question-list.phtml">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">Magebit\Faq\ViewModel\QuestionList</argument>
+                </arguments>
+            </block>
         </referenceContainer>
+        <referenceContainer name="sidebar.additional" remove="true"/>
+        <!--<referenceContainer name="header.panel" remove="true"/>-->
     </body>
 </page>

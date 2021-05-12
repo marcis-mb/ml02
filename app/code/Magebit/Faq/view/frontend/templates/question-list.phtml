@@ -15,16 +15,11 @@
  */
 ?>
 <?php
-$questions = $block->getCollection();
+$viewModel = $block->getViewModel();
 ?>
-<div class="faq-question-list">
-    <?php foreach ($questions as $question): ?>
+<div class="faq-list">
+    <?php foreach ($viewModel->getQuestions() as $question): ?>
         <div class="faq-question"><?= $question->getQuestion() ?></div>
         <div class="faq-answer"><?= $question->getAnswer() ?></div>
-        <!--        <pre>-->
-        <!--            --><?php //
-//            print_r($question->getData());
-//            ?>
-        <!--        </pre>-->
     <?php endforeach; ?>
 </div>

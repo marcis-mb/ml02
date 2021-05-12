@@ -12,5 +12,8 @@
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="id"/>
         </constraint>
+        <index referenceId="INDEX_QUESTION" indexType="fulltext">
+            <column name="question"/>
+        </index>
     </table>
 </schema>

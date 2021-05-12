@@ -33,65 +33,64 @@
             </settings>
         </dataProvider>
     </dataSource>
-    <!--<listingToolbar name="listing_top">-->
-        <!--<settings>-->
-            <!--<sticky>true</sticky>-->
-        <!--</settings>-->
-        <!--<bookmark name="bookmarks"/>-->
-        <!--<columnsControls name="columns_controls"/>-->
+    <listingToolbar name="listing_top">
+        <settings>
+            <sticky>true</sticky>
+        </settings>
+        <bookmark name="bookmarks"/>
+        <columnsControls name="columns_controls"/>
         <!--<filterSearch name="fulltext"/>-->
-        <!--<filters name="listing_filters">-->
-            <!--<settings>-->
-                <!--<templates>-->
-                    <!--<filters>-->
-                        <!--<select>-->
-                            <!--<param name="template" xsi:type="string">ui/grid/filters/elements/ui-select</param>-->
-                            <!--<param name="component" xsi:type="string">Magento_Ui/js/form/element/ui-select</param>-->
-                        <!--</select>-->
-                    <!--</filters>-->
-                <!--</templates>-->
-            <!--</settings>-->
-        <!--</filters>-->
-        <!--<massaction name="listing_massaction">-->
-            <!--<action name="enable">-->
-                <!--<settings>-->
-                    <!--<url path="faq/question/enable"/>-->
-                    <!--<type>edit</type>-->
-                    <!--<label translate="true">Enable</label>-->
-                <!--</settings>-->
-            <!--</action>-->
-            <!--<action name="disable">-->
-                <!--<settings>-->
-                    <!--<url path="faq/question/disable"/>-->
-                    <!--<type>edit</type>-->
-                    <!--<label translate="true">Disable</label>-->
-                <!--</settings>-->
-            <!--</action>-->
-            <!--<action name="delete">-->
-                <!--<settings>-->
-                    <!--<confirm>-->
-                        <!--<message translate="true">Are you sure you want to delete selected items?</message>-->
-                        <!--<title translate="true">Delete items</title>-->
-                    <!--</confirm>-->
-                    <!--<url path="faq/question/massDelete"/>-->
-                    <!--<type>delete</type>-->
-                    <!--<label translate="true">Delete</label>-->
-                <!--</settings>-->
-            <!--</action>-->
-            <!--<action name="edit">-->
-                <!--<settings>-->
-                    <!--<callback>-->
-                        <!--<target>editSelected</target>-->
-                        <!--<provider>faq_question_listing.cms_block_listing.faq_question_columns_editor</provider>-->
-                    <!--</callback>-->
-                    <!--<type>edit</type>-->
-                    <!--<label translate="true">Edit</label>-->
-                <!--</settings>-->
-            <!--</action>-->
-
-        <!--</massaction>-->
-        <!--<paging name="listing_paging"/>-->
-    <!--</listingToolbar>-->
+        <filters name="listing_filters">
+            <settings>
+                <templates>
+                    <filters>
+                        <select>
+                            <param name="template" xsi:type="string">ui/grid/filters/elements/ui-select</param>
+                            <param name="component" xsi:type="string">Magento_Ui/js/form/element/ui-select</param>
+                        </select>
+                    </filters>
+                </templates>
+            </settings>
+        </filters>
+        <massaction name="listing_massaction">
+            <action name="enable">
+                <settings>
+                    <url path="faq/question/massEnable"/>
+                    <type>enable</type>
+                    <label translate="true">Enable</label>
+                </settings>
+            </action>
+            <action name="disable">
+                <settings>
+                    <url path="faq/question/massDisable"/>
+                    <type>disable</type>
+                    <label translate="true">Disable</label>
+                </settings>
+            </action>
+            <action name="delete">
+                <settings>
+                    <confirm>
+                        <message translate="true">Are you sure you want to delete selected items?</message>
+                        <title translate="true">Delete items</title>
+                    </confirm>
+                    <url path="faq/question/massDelete"/>
+                    <type>delete</type>
+                    <label translate="true">Delete</label>
+                </settings>
+            </action>
+            <action name="edit">
+                <settings>
+                    <callback>
+                        <target>editSelected</target>
+                        <provider>faq_question_listing.faq_question_listing.faq_question_columns_editor</provider>
+                    </callback>
+                    <type>edit</type>
+                    <label translate="true">Edit</label>
+                </settings>
+            </action>
+        </massaction>
+        <paging name="listing_paging"/>
+    </listingToolbar>
     <columns name="faq_question_columns">
         <settings>
             <editorConfig>

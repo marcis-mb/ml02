@@ -11,6 +11,8 @@ namespace Magebit\Faq\Model;
 
 use \Magebit\Faq\Api\QuestionManagementInterface;
 use \Magebit\Faq\Model\ResourceModel\QuestionFactory;
+use \Magebit\Faq\Model\Question;
+use \Magebit\Faq\Model\Question\Source\Status;
 
 /**
  * Class QuestionManagement
@@ -37,17 +39,17 @@ class QuestionManagement implements QuestionManagementInterface
     /**
      *
      */
-    public function enableQuestion()
+    public function enableQuestion(\Magebit\Faq\Model\Question $question)
     {
-        // TODO: Implement enableQuestion() method.
+        $question->setStatus(Status::STATUS_ENABLED)->save();
     }
 
     /**
      *
      */
-    public function disableQuestion()
+    public function disableQuestion(\Magebit\Faq\Model\Question $question)
     {
-        // TODO: Implement disableQuestion() method.
+        $question->setStatus(Status::STATUS_DISABLED)->save();
     }
 
 

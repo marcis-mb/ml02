@@ -19,13 +19,18 @@ interface QuestionManagementInterface
     /**
      * Enable Question
      *
+     * @param \Magebit\Faq\Model\Question $question
+     * @return mixed
      */
-    public function enableQuestion();
+    public function enableQuestion(\Magebit\Faq\Model\Question $question);
+
 
     /**
      * Disable Question
      *
+     * @param \Magebit\Faq\Model\Question $question
+     * @return mixed
      */
-    public function disableQuestion();
+    public function disableQuestion(\Magebit\Faq\Model\Question $question);
 
 }

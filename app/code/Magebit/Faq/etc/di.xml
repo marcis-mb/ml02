@@ -2,8 +2,9 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <preference for="Magebit\Faq\Api\Data\QuestionInterface" type="Magebit\Faq\Model\Question" />
     <preference for="Magebit\Faq\Api\QuestionRepositoryInterface" type="Magebit\Faq\Model\QuestionRepository" />
-    <preference for="Magebit\Faq\Api\Api\Data\QuestionSearchResultsInterface"
-                type="Magento\Framework\Api\SearchResults"/>
+    <preference for="Magebit\Faq\Api\QuestionManagementInterface" type="Magebit\Faq\Model\QuestionManagement" />
+    <!--<preference for="Magebit\Faq\Api\Data\QuestionSearchResultsInterface"-->
+                <!--type="Magento\Framework\Api\SearchResults"/>-->
     <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
         <arguments>
             <argument name="collections" xsi:type="array">
@@ -11,4 +12,19 @@
             </argument>
         </arguments>
     </type>
+
+    <!--<type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">-->
+        <!--<arguments>-->
+            <!--<argument name="collections" xsi:type="array">-->
+                <!--<item name="faq_question_listing_data_source" xsi:type="string">MagebitFaqQuestionCollection</item>-->
+            <!--</argument>-->
+        <!--</arguments>-->
+    <!--</type>-->
+    <!--<virtualType name="MagebitFaqQuestionCollection" type="Magebit\Faq\Model\ResourceModel\Question\Collection">-->
+        <!--<arguments>-->
+            <!--<argument name="mainTable" xsi:type="string">magebit_faq</argument>-->
+            <!--<argument name="resourceModel" xsi:type="string">Magebit\Faq\Model\ResourceModel\Question</argument>-->
+        <!--</arguments>-->
+    <!--</virtualType>-->
+
 </config>

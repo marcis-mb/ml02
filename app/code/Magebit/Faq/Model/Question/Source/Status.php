@@ -13,6 +13,10 @@ use Magento\Framework\Data\OptionSourceInterface;
 
 class Status implements OptionSourceInterface
 {
+    const STATUS_ENABLED = 0;
+
+    const STATUS_DISABLED = 1;
+
     /**
      * @var \Magebit\Faq\Model\Question
      */

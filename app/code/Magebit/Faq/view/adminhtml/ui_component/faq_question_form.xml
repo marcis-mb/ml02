@@ -40,18 +40,18 @@
         <settings>
             <label/>
         </settings>
-        <!--<field name="id" formElement="input">-->
-            <!--<argument name="data" xsi:type="array">-->
-                <!--<item name="config" xsi:type="array">-->
-                    <!--<item name="source" xsi:type="string">question</item>-->
-                <!--</item>-->
-            <!--</argument>-->
-            <!--<settings>-->
-                <!--<dataType>number</dataType>-->
-                <!--<visible>false</visible>-->
-                <!--<dataScope>id</dataScope>-->
-            <!--</settings>-->
-        <!--</field>-->
+        <field name="id" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">question</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <visible>false</visible>
+                <dataScope>id</dataScope>
+            </settings>
+        </field>
         <field name="status" sortOrder="10" formElement="checkbox">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
