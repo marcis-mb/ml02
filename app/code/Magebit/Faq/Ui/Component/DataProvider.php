@@ -6,13 +6,12 @@
  * Time: 12:16
  */
 
-namespace Magebit\Faq\Model\Question;
+namespace Magebit\Faq\Ui\Component;
 
 use Magento\Framework\App\Request\DataPersistorInterface;
 use Magebit\Faq\Model\ResourceModel\Question\CollectionFactory;
 
-class DataProvider extends \Magento\Ui\DataProvider\ModifierPoolDataProvider
-//    \Magento\Ui\DataProvider\AbstractDataProvider
+class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
 {
     /**
      * @var \Magebit\Faq\Model\ResourceModel\Question\Collection
@@ -51,37 +50,37 @@ class DataProvider extends \Magento\Ui\DataProvider\ModifierPoolDataProvider
 
     }
 
-    /**
-     * Get data
-     *
-     * @return array
-     */
-    public function getData()
-    {
-        if (isset($this->loadedData)) {
-            return $this->loadedData;
-        }
-        $items = $this->collection->getItems();
-        /** @var \Magebit\Faq\Model\Question $question */
-        foreach ($items as $question) {
-            $this->loadedData[$question->getId()] = $question->getData();
-            //$this->loadedData['items'][] = $question->getData();
-        }
-
-        $data = $this->dataPersistor->get('faq_question');
-        if (!empty($data)) {
-            $question = $this->collection->getNewEmptyItem();
-            $question->setData($data);
-            $this->loadedData[$question->getId()] = $question->getData();
-            $this->dataPersistor->clear('faq_question');
-        }
-//        echo "<pre>";
-//        print_r($this->loadedData);
-//        echo "</pre>";
-//        exit;
-        return $this->loadedData;
-
-    }
+//    /**
+//     * Get data
+//     *
+//     * @return array
+//     */
+//    public function getData()
+//    {
+//        if (isset($this->loadedData)) {
+//            return $this->loadedData;
+//        }
+//        $items = $this->collection->getItems();
+//        /** @var \Magebit\Faq\Model\Question $question */
+//        foreach ($items as $question) {
+//            //$this->loadedData[$question->getId()] = $question->getData();
+//            $this->loadedData['items'][] = $question->getData();
+//        }
+//
+//        $data = $this->dataPersistor->get('faq_question');
+//        if (!empty($data)) {
+//            $question = $this->collection->getNewEmptyItem();
+//            $question->setData($data);
+//            $this->loadedData[$question->getId()] = $question->getData();
+//            $this->dataPersistor->clear('faq_question');
+//        }
+////        echo "<pre>";
+////        print_r($this->loadedData);
+////        echo "</pre>";
+////        exit;
+//        return $this->loadedData;
+//
+//    }
 
 //    /**
 //     * Prepares Meta

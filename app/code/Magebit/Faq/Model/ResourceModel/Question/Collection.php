@@ -23,6 +23,7 @@ class Collection extends AbstractCollection
     protected function _construct()
     {
         $this->_init(QuestionModel::class, QuestionResourceModel::class);
+        //$this->_map['fields']['id'] = 'main_table.id';
     }
 
 }

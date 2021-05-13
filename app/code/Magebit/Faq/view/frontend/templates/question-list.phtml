@@ -17,9 +17,22 @@
 <?php
 $viewModel = $block->getViewModel();
 ?>
+<script>
+    function toggle(id) {
+        var clicked = document.getElementById(id);
+        if(!clicked.classList.contains("visible")) {
+            document.getElementsByClassName('visible')[0].classList.remove('visible');
+            clicked.classList.add('visible');
+        }
+    }
+</script>
 <div class="faq-list">
-    <?php foreach ($viewModel->getQuestions() as $question): ?>
-        <div class="faq-question"><?= $question->getQuestion() ?></div>
-        <div class="faq-answer"><?= $question->getAnswer() ?></div>
-    <?php endforeach; ?>
+    <?php
+    $visibleClass = ' visible';
+    foreach ($viewModel->getQuestions() as $question): ?>
+        <div class="faq-question" onclick="toggle('faq-<?= $question->getId() ?>')"><?= $question->getQuestion() ?></div>
+        <div id="faq-<?= $question->getId() ?>" class="faq-answer<?= $visibleClass ?>"><?= $question->getAnswer() ?></div>
+    <?php
+        $visibleClass = '';
+    endforeach; ?>
 </div>

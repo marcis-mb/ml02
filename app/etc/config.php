@@ -341,6 +341,7 @@ return [
         'Klarna_KpGraphQl' => 1,
         'Magebit_Faq' => 1,
         'Magebit_Learning' => 1,
+        'Marco_Faq' => 1,
         'PayPal_Braintree' => 1,
         'PayPal_BraintreeGraphQl' => 1,
         'Temando_ShippingRemover' => 1,

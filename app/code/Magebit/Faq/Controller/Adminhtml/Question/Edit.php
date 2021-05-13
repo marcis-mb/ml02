@@ -77,9 +77,18 @@ class Edit extends \Magento\Backend\App\Action implements HttpGetActionInterface
         $id = $this->getRequest()->getParam('id');
         $model = $this->questionFactory->create();
 
+//        echo "id: " . $id . "<br><pre>";
+//        print_r($this->getRequest()->getParams());
+//        echo "</pre>";
+        //exit;
+
         // 2. Initial checking
         if ($id) {
             $model->load($id);
+//            echo "id: " . $id . "<br><pre>";
+//            print_r($model->getData());
+//            echo "</pre>";
+//            exit;
             if (!$model->getId()) {
                 $this->messageManager->addErrorMessage(__('This question no longer exists.'));
                 /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */

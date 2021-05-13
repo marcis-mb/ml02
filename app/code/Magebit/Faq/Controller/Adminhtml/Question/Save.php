@@ -88,6 +88,7 @@ class Save
         /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
         $data = $this->getRequest()->getPostValue();
+        //print_r($this->getRequest()->getPostValue());
         if ($data) {
             if (isset($data['status']) && $data['status'] === 'true') {
                 $data['status'] = Question::STATUS_ENABLED;
@@ -100,14 +101,27 @@ class Save
             $model = $this->questionFactory->create();
 
             $id = $this->getRequest()->getParam('id');
+//            echo "<br>ID: " . $id . " <br>";
+//            print_r($this->getRequest()->getParams());
+//            exit;
             if ($id) {
                 try {
-                    $model = $this->questionRepository->getById($id);
+                    $model = $this->questionRepository->get($id);
                 } catch (LocalizedException $e) {
                     $this->messageManager->addErrorMessage(__('This question no longer exists.'));
                     return $resultRedirect->setPath('*/*/');
                 }
             }
+
+//            echo "Model<pre>";
+//            print_r(get_class_methods($model));
+//            echo "</pre>";
+//
+//            echo "Data<pre>";
+//            print_r($data);
+//            echo "</pre>";
+//
+//            exit;
 
             $model->setData($data);
 

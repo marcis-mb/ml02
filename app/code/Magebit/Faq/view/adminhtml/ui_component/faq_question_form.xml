@@ -3,7 +3,7 @@
       xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
-            <item name="provider" xsi:type="string">faq_question_form.faq_question_form_data_source</item>
+            <item name="provider" xsi:type="string">faq_question_form.question_form_data_source</item>
         </item>
         <item name="label" xsi:type="string" translate="true">General Information</item>
         <item name="template" xsi:type="string">templates/form/collapsible</item>
@@ -17,10 +17,10 @@
         <namespace>faq_question_form</namespace>
         <dataScope>data</dataScope>
         <deps>
-            <dep>faq_question_form.faq_question_form_data_source</dep>
+            <dep>faq_question_form.question_form_data_source</dep>
         </deps>
     </settings>
-    <dataSource name="faq_question_form_data_source">
+    <dataSource name="question_form_data_source">
         <argument name="data" xsi:type="array">
             <item name="js_config" xsi:type="array">
                 <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
@@ -29,7 +29,7 @@
         <settings>
             <submitUrl path="faq/question/save"/>
         </settings>
-        <dataProvider class="Magebit\Faq\Model\Question\DataProvider" name="faq_question_form_data_source">
+        <dataProvider class="Magebit\Faq\Model\Question\DataProvider" name="question_form_data_source">
             <settings>
                 <requestFieldName>id</requestFieldName>
                 <primaryFieldName>id</primaryFieldName>
