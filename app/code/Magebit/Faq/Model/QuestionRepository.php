@@ -8,21 +8,15 @@
 
 namespace Magebit\Faq\Model;
 
-
 use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
-
-
-use Magento\Framework\Api\DataObjectHelper;
-use Magento\Framework\App\ObjectManager;
 use Magento\Framework\Reflection\DataObjectProcessor;
-use Magento\Store\Model\StoreManagerInterface;
-use Magento\Framework\EntityManager\HydratorInterface;
-
-use \Magebit\Faq\Api\QuestionRepositoryInterface;
-use \Magebit\Faq\Api\Data\QuestionInterface;
+use Magebit\Faq\Api\QuestionRepositoryInterface;
+use Magebit\Faq\Api\Data\QuestionInterface;
+use Magebit\Faq\Api\Data\QuestionSearchResultsInterface;
+use Magento\Framework\Api\SearchCriteriaInterface;
 
 /**
  * Class QuestionRepository
@@ -94,14 +88,13 @@ class QuestionRepository implements QuestionRepositoryInterface
      * @return QuestionInterface|Question
      * @throws NoSuchEntityException
      */
-    public function get($id)
+    public function get($id): Question
     {
         $question = $this->questionFactory->create();
         $this->resourceModel->load($question, $id);
         if (!$question->getId()) {
             throw new NoSuchEntityException(__('The Question with the "%1" ID doesn\'t exist.', $id));
         }
-
         return $question;
     }
 
@@ -110,7 +103,7 @@ class QuestionRepository implements QuestionRepositoryInterface
      * @return QuestionInterface
      * @throws CouldNotSaveException
      */
-    public function save(\Magebit\Faq\Api\Data\QuestionInterface $question)
+    public function save(QuestionInterface $question): QuestionInterface
     {
         try {
             $this->resourceModel->save($question);
@@ -124,7 +117,7 @@ class QuestionRepository implements QuestionRepositoryInterface
      * @param \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria
      * @return \Magebit\Faq\Api\Data\QuestionSearchResultsInterface
      */
-    public function getList(\Magento\Framework\Api\SearchCriteriaInterface $searchCriteria)
+    public function getList(SearchCriteriaInterface $searchCriteria): QuestionSearchResultsInterface
     {
         /** @var \Magebit\Faq\Model\ResourceModel\Question\Collection $collection */
         $collection = $this->collectionFactory->create();
@@ -146,7 +139,7 @@ class QuestionRepository implements QuestionRepositoryInterface
      * @return bool
      * @throws CouldNotDeleteException
      */
-    public function delete(\Magebit\Faq\Api\Data\QuestionInterface $question)
+    public function delete(QuestionInterface $question): bool
     {
         try {
             $this->resourceModel->delete($question);
@@ -164,7 +157,7 @@ class QuestionRepository implements QuestionRepositoryInterface
      * @throws CouldNotDeleteException
      * @throws NoSuchEntityException
      */
-    public function deleteById($id)
+    public function deleteById($id): bool
     {
         return $this->delete($this->get($id));
     }

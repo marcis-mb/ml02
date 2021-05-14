@@ -1,5 +1,19 @@
 <?php
-
+declare(strict_types=1);
+/**
+ * This file is part of the Magebit Faq package.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magebit Faq
+ * to newer versions in the future.
+ *
+ * @copyright Copyright (c) 2019 Magebit, Ltd. (https://magebit.com/)
+ * @license   GNU General Public License ("GPL") v3.0
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Magebit\Faq\Controller\Adminhtml\Question;
 
@@ -9,38 +23,11 @@ use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Backend\App\Action\Context;
 use Magebit\Faq\Api\QuestionRepositoryInterface;
 use Magento\Framework\App\Request\DataPersistorInterface;
+use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\Exception\LocalizedException;
-use Magento\Framework\Registry;
+use Magento\Backend\App\Action;
 
-class Save
-    extends \Magento\Backend\App\Action
-//{
-//    /**
-//     * @var \Magebit\Faq\Api\QuestionRepositoryInterface;
-//     */
-//    private $questionRepository;
-//
-//    private $questionFactory;
-//
-//    public function __construct(
-//        \Magento\Backend\App\Action\Context $context,
-//        QuestionFactory $questionFactory,
-//        QuestionRepositoryInterface $questionRepository
-//    ){
-//        $this->questionFactory = $questionFactory;
-//        $this->questionRepository = $questionRepository;
-//        parent::__construct($context);
-//    }
-//
-//    public function execute(){
-//        $this->questionFactory->create()
-//            ->setData($this->getRequest()->getPostValue())
-//            ->save();
-//        return $this->resultRedirectFactory->create()->setPath('*/*/');
-//    }
-//}
-
-    implements HttpPostActionInterface
+class Save extends Action implements HttpPostActionInterface
 {
     /**
      * @var DataPersistorInterface
@@ -83,12 +70,11 @@ class Save
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @return \Magento\Framework\Controller\ResultInterface
      */
-    public function execute()
+    public function execute(): ResultInterface
     {
         /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
         $data = $this->getRequest()->getPostValue();
-        //print_r($this->getRequest()->getPostValue());
         if ($data) {
             if (isset($data['status']) && $data['status'] === 'true') {
                 $data['status'] = Question::STATUS_ENABLED;
@@ -101,9 +87,6 @@ class Save
             $model = $this->questionFactory->create();
 
             $id = $this->getRequest()->getParam('id');
-//            echo "<br>ID: " . $id . " <br>";
-//            print_r($this->getRequest()->getParams());
-//            exit;
             if ($id) {
                 try {
                     $model = $this->questionRepository->get($id);
@@ -112,19 +95,7 @@ class Save
                     return $resultRedirect->setPath('*/*/');
                 }
             }
-
-//            echo "Model<pre>";
-//            print_r(get_class_methods($model));
-//            echo "</pre>";
-//
-//            echo "Data<pre>";
-//            print_r($data);
-//            echo "</pre>";
-//
-//            exit;
-
             $model->setData($data);
-
             try {
                 $this->questionRepository->save($model);
                 $this->messageManager->addSuccessMessage(__('You saved the question.'));
@@ -150,7 +121,7 @@ class Save
      * @param \Magento\Framework\Controller\ResultInterface $resultRedirect
      * @return \Magento\Framework\Controller\ResultInterface
      */
-    private function processQuestionReturn($model, $data, $resultRedirect)
+    private function processQuestionReturn($model, $data, $resultRedirect): ResultInterface
     {
         $redirect = $data['back'] ?? 'close';
 

@@ -1,18 +1,31 @@
 <?php
+declare(strict_types=1);
 /**
- * Created by PhpStorm.
- * User: marcispumpurs
- * Date: 21.6.5
- * Time: 12:16
+ * This file is part of the Magebit Faq package.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magebit Faq
+ * to newer versions in the future.
+ *
+ * @copyright Copyright (c) 2019 Magebit, Ltd. (https://magebit.com/)
+ * @license   GNU General Public License ("GPL") v3.0
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Magebit\Faq\Model\Question;
 
 use Magento\Framework\App\Request\DataPersistorInterface;
 use Magebit\Faq\Model\ResourceModel\Question\CollectionFactory;
+use Magento\Ui\DataProvider\ModifierPoolDataProvider;
 
-class DataProvider extends \Magento\Ui\DataProvider\ModifierPoolDataProvider
-//    \Magento\Ui\DataProvider\AbstractDataProvider
+/**
+ * Class DataProvider
+ * @package Magebit\Faq\Model\Question
+ */
+class DataProvider extends ModifierPoolDataProvider
 {
     /**
      * @var \Magebit\Faq\Model\ResourceModel\Question\Collection
@@ -23,6 +36,11 @@ class DataProvider extends \Magento\Ui\DataProvider\ModifierPoolDataProvider
      * @var DataPersistorInterface
      */
     protected $dataPersistor;
+
+    /**
+     * @var array
+     */
+    private $loadedData;
 
     /**
      * Constructor
@@ -51,12 +69,13 @@ class DataProvider extends \Magento\Ui\DataProvider\ModifierPoolDataProvider
 
     }
 
+
     /**
      * Get data
      *
      * @return array
      */
-    public function getData()
+    public function getData(): ?array
     {
         if (isset($this->loadedData)) {
             return $this->loadedData;
@@ -65,7 +84,6 @@ class DataProvider extends \Magento\Ui\DataProvider\ModifierPoolDataProvider
         /** @var \Magebit\Faq\Model\Question $question */
         foreach ($items as $question) {
             $this->loadedData[$question->getId()] = $question->getData();
-            //$this->loadedData['items'][] = $question->getData();
         }
 
         $data = $this->dataPersistor->get('faq_question');
@@ -75,193 +93,8 @@ class DataProvider extends \Magento\Ui\DataProvider\ModifierPoolDataProvider
             $this->loadedData[$question->getId()] = $question->getData();
             $this->dataPersistor->clear('faq_question');
         }
-//        echo "<pre>";
-//        print_r($this->loadedData);
-//        echo "</pre>";
-//        exit;
         return $this->loadedData;
 
     }
 
-//    /**
-//     * Prepares Meta
-//     *
-//     * @param array $meta
-//     * @return array
-//     */
-//    public function prepareMeta(array $meta)
-//    {
-//        return $meta;
-//    }
-//
-//    public function getData(){
-//        $result = [];
-//        $i = 0;
-//        if($this->collection->getItems()){
-//            foreach ($this->collection->getItems() as $item){
-//                //$result[$item->getId()]['general'] = $item->getData();
-//                $result['items'][$i++] = $item->getData();
-//            }
-//        }
-////        echo "<pre>";
-////        print_r($result);
-////        echo "</pre>";
-////        exit;
-//        return $result;
-//    }
-
-
-
-//    /**
-//     * Get data
-//     *
-//     * @return array
-//     */
-//    public function getData()
-//    {
-//        echo "<pre>";
-//        print_r($this->getCollection()->toArray());
-//        echo "</pre>";
-//        exit;
-//        return $this->getCollection()->toArray();
-//    }
-
-//    public function getData(){
-//        $result = [];
-//        $i = 0;
-//        if($this->collection->getItems()){
-//        foreach ($this->collection->getItems() as $item){
-//            //$result[$item->getId()]['general'] = $item->getData();
-//            $result['items'][$i++] = $item->getData();
-//        }
-//        }
-//        //$result['totalRecords'] = $i;
-////                echo "<pre>";
-////        print_r($result);
-////        echo "</pre>";
-////        exit;
-//        return $result;
-//    }
-
 }
-
-//use Magento\Cms\Ui\Component\AddFilterInterface;
-//use Magento\Framework\Api\Filter;
-//use Magento\Framework\Api\FilterBuilder;
-//use Magento\Framework\Api\Search\SearchCriteriaBuilder;
-//use Magento\Framework\App\ObjectManager;
-//use Magento\Framework\App\RequestInterface;
-//use Magento\Framework\AuthorizationInterface;
-//use Magento\Framework\View\Element\UiComponent\DataProvider\Reporting;
-//
-///**
-// * DataProvider for cms ui.
-// */
-//class DataProvider extends \Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider
-//{
-//    /**
-//     * @var AuthorizationInterface
-//     */
-//    private $authorization;
-//
-//    /**
-//     * @var AddFilterInterface[]
-//     */
-//    private $additionalFilterPool;
-//
-//    /**
-//     * @param string $name
-//     * @param string $primaryFieldName
-//     * @param string $requestFieldName
-//     * @param Reporting $reporting
-//     * @param SearchCriteriaBuilder $searchCriteriaBuilder
-//     * @param RequestInterface $request
-//     * @param FilterBuilder $filterBuilder
-//     * @param array $meta
-//     * @param array $data
-//     * @param array $additionalFilterPool
-//     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
-//     */
-//    public function __construct(
-//        $name,
-//        $primaryFieldName,
-//        $requestFieldName,
-//        Reporting $reporting,
-//        SearchCriteriaBuilder $searchCriteriaBuilder,
-//        RequestInterface $request,
-//        FilterBuilder $filterBuilder,
-//        array $meta = [],
-//        array $data = [],
-//        array $additionalFilterPool = []
-//    ) {
-//        parent::__construct(
-//            $name,
-//            $primaryFieldName,
-//            $requestFieldName,
-//            $reporting,
-//            $searchCriteriaBuilder,
-//            $request,
-//            $filterBuilder,
-//            $meta,
-//            $data
-//        );
-//
-//        $this->meta = array_replace_recursive($meta, $this->prepareMetadata());
-//        $this->additionalFilterPool = $additionalFilterPool;
-//    }
-//
-//    /**
-//     * Get authorization info.
-//     *
-//     * @deprecated 101.0.7
-//     * @return AuthorizationInterface|mixed
-//     */
-//    private function getAuthorizationInstance()
-//    {
-//        if ($this->authorization === null) {
-//            $this->authorization = ObjectManager::getInstance()->get(AuthorizationInterface::class);
-//        }
-//        return $this->authorization;
-//    }
-//
-//    /**
-//     * Prepares Meta
-//     *
-//     * @return array
-//     */
-//    public function prepareMetadata()
-//    {
-//        $metadata = [];
-//
-//        if (!$this->getAuthorizationInstance()->isAllowed('Magebit_Faq::faq')) {
-//            $metadata = [
-//                'faq_question_columns' => [
-//                    'arguments' => [
-//                        'data' => [
-//                            'config' => [
-//                                'editorConfig' => [
-//                                    'enabled' => false
-//                                ],
-//                                'componentType' => \Magento\Ui\Component\Container::NAME
-//                            ]
-//                        ]
-//                    ]
-//                ]
-//            ];
-//        }
-//
-//        return $metadata;
-//    }
-//
-//    /**
-//     * @inheritdoc
-//     */
-//    public function addFilter(Filter $filter)
-//    {
-//        if (!empty($this->additionalFilterPool[$filter->getField()])) {
-//            $this->additionalFilterPool[$filter->getField()]->addFilter($this->searchCriteriaBuilder, $filter);
-//        } else {
-//            parent::addFilter($filter);
-//        }
-//    }
-//}

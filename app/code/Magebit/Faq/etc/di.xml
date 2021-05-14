@@ -3,20 +3,21 @@
     <preference for="Magebit\Faq\Api\Data\QuestionInterface" type="Magebit\Faq\Model\Question" />
     <preference for="Magebit\Faq\Api\QuestionRepositoryInterface" type="Magebit\Faq\Model\QuestionRepository" />
     <preference for="Magebit\Faq\Api\QuestionManagementInterface" type="Magebit\Faq\Model\QuestionManagement" />
-    <!--<preference for="Magebit\Faq\Api\Data\QuestionSearchResultsInterface"-->
-                <!--type="Magento\Framework\Api\SearchResults"/>-->
-    <!--<type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">-->
-        <!--<arguments>-->
-            <!--<argument name="collections" xsi:type="array">-->
-                <!--<item name="faq_question_listing_data_source" xsi:type="string">Magebit\Faq\Model\ResourceModel\Question\Grid\Collection</item>-->
-            <!--</argument>-->
-        <!--</arguments>-->
-    <!--</type>-->
-    <!--<virtualType name="Magebit\Faq\Model\ResourceModel\Question\Grid\Collection"-->
-                 <!--type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">-->
-        <!--<arguments>-->
-            <!--<argument name="mainTable" xsi:type="const">Magebit\Faq\Api\Data\QuestionInterface::MAIN_TABLE</argument>-->
-            <!--<argument name="resourceModel" xsi:type="string">Magebit\Faq\Model\ResourceModel\Question</argument>-->
-        <!--</arguments>-->
-    <!--</virtualType>-->
+
+    <preference for="Magebit\Faq\Api\Data\QuestionSearchResultsInterface"
+                type="Magento\Framework\Api\SearchResults"/>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="faq_question_listing_data_source" xsi:type="string">Magebit\Faq\Model\ResourceModel\Question\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="Magebit\Faq\Model\ResourceModel\Question\Grid\Collection"
+                 type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="const">Magebit\Faq\Api\Data\QuestionInterface::MAIN_TABLE</argument>
+            <argument name="resourceModel" xsi:type="string">Magebit\Faq\Model\ResourceModel\Question</argument>
+        </arguments>
+    </virtualType>
 </config>

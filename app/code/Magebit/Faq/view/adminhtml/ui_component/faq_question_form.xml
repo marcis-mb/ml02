@@ -104,7 +104,6 @@
                     <rule name="required-entry" xsi:type="boolean">true</rule>
                 </validation>
                 <dataType>text</dataType>
-
                 <label translate="true">Answer</label>
                 <dataScope>answer</dataScope>
             </settings>

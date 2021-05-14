@@ -1,22 +1,32 @@
 <?php
+declare(strict_types=1);
 /**
- * Created by PhpStorm.
- * User: marcispumpurs
- * Date: 21.6.5
- * Time: 12:16
+ * This file is part of the Magebit Faq package.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magebit Faq
+ * to newer versions in the future.
+ *
+ * @copyright Copyright (c) 2019 Magebit, Ltd. (https://magebit.com/)
+ * @license   GNU General Public License ("GPL") v3.0
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Magebit\Faq\Model\Question\Source;
 
 
 use Magento\Framework\Data\OptionSourceInterface;
+use Magebit\Faq\Model\Question;
 
+/**
+ * Class Status
+ * @package Magebit\Faq\Model\Question\Source
+ */
 class Status implements OptionSourceInterface
 {
-    const STATUS_ENABLED = 0;
-
-    const STATUS_DISABLED = 1;
-
     /**
      * @var \Magebit\Faq\Model\Question
      */
@@ -27,17 +37,17 @@ class Status implements OptionSourceInterface
      *
      * @param \Magebit\Faq\Model\Question $question
      */
-    public function __construct(\Magebit\Faq\Model\Question $question)
+    public function __construct(Question $question)
     {
         $this->question = $question;
     }
 
     /**
-     * Get options
+     * Get question status options
      *
      * @return array
      */
-    public function toOptionArray()
+    public function toOptionArray(): array
     {
         $availableOptions = $this->question->getAvailableStatuses();
         $options = [];

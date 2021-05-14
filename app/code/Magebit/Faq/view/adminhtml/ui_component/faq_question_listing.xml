@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
             <item name="provider" xsi:type="string">faq_question_listing.faq_question_listing_data_source</item>
@@ -8,7 +9,7 @@
     <settings>
         <buttons>
             <button name="add">
-                <url path="faq/question/new"/>
+                <url path="faq/question/edit"/>
                 <class>primary</class>
                 <label translate="true">Add New Question</label>
             </button>
@@ -39,7 +40,7 @@
         </settings>
         <bookmark name="bookmarks"/>
         <columnsControls name="columns_controls"/>
-        <!--<filterSearch name="fulltext"/>-->
+        <filterSearch name="fulltext"/>
         <filters name="listing_filters">
             <settings>
                 <templates>
@@ -100,11 +101,15 @@
                 </param>
                 <param name="indexField" xsi:type="string">id</param>
                 <param name="enabled" xsi:type="boolean">true</param>
-                <param name="selectProvider" xsi:type="string">faq_question_listing.faq_question_listing.faq_question_columns.ids</param>
+                <param name="selectProvider" xsi:type="string">
+                    faq_question_listing.faq_question_listing.faq_question_columns.ids
+                </param>
             </editorConfig>
             <childDefaults>
                 <param name="fieldAction" xsi:type="array">
-                    <item name="provider" xsi:type="string">faq_question_listing.faq_question_listing.faq_question_columns_editor</item>
+                    <item name="provider" xsi:type="string">
+                        faq_question_listing.faq_question_listing.faq_question_columns_editor
+                    </item>
                     <item name="target" xsi:type="string">startEdit</item>
                     <item name="params" xsi:type="array">
                         <item name="0" xsi:type="string">${ $.$data.rowIndex }</item>
@@ -120,7 +125,7 @@
         </selectionsColumn>
         <column name="id">
             <settings>
-                <filter>textRange</filter>
+                <filter>number</filter>
                 <label translate="true">ID</label>
                 <sorting>asc</sorting>
             </settings>
@@ -158,7 +163,8 @@
                 <label translate="true">Position</label>
             </settings>
         </column>
-        <column name="updated_at" class="Magento\Ui\Component\Listing\Columns\Date" component="Magento_Ui/js/grid/columns/date">
+        <column name="updated_at" class="Magento\Ui\Component\Listing\Columns\Date"
+                component="Magento_Ui/js/grid/columns/date">
             <settings>
                 <filter>dateRange</filter>
                 <dataType>date</dataType>
