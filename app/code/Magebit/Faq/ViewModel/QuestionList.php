@@ -17,8 +17,9 @@ declare(strict_types=1);
 
 namespace Magebit\Faq\ViewModel;
 
-
+use Magebit\Faq\Model\Question;
 use Magebit\Faq\Model\QuestionFactory;
+use Magebit\Faq\Model\ResourceModel\Question\CollectionFactory;
 use Magento\Framework\View\Element\Block\ArgumentInterface;
 
 /**
@@ -33,29 +34,32 @@ class QuestionList implements ArgumentInterface
     const SORT_ORDER_ASC = 'asc';
 
     /**
-     * @var \Magebit\Faq\Model\QuestionFactory
+     * @var \Magebit\Faq\Model\ResourceModel\Question\Collection
      */
-    private $questionFactory;
+    private $collection;
 
     /**
      * QuestionList constructor.
-     * @param \Magebit\Faq\Model\QuestionFactory $questionFactory
+     * @param QuestionFactory $questionFactory
+     * @param CollectionFactory $questionCollectionFactory
      */
     public function __construct(
-        QuestionFactory $questionFactory
+        CollectionFactory $questionCollectionFactory
     )
     {
-        $this->questionFactory = $questionFactory;
+        $this->collection = $questionCollectionFactory->create();
     }
 
+
     /**
-     * @return \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection
+     * @return \Magento\Framework\DataObject[]
      */
-    public function getQuestions()
+    public function getQuestions(): array
     {
-        $question = $this->questionFactory->create();
-        return $question->getCollection()
-            ->addFilter($question::STATUS, $question::STATUS_ENABLED)
-            ->setOrder($question::POSITION, self::SORT_ORDER_ASC);
+        $questions = $this->collection
+            ->addFilter(Question::STATUS, Question::STATUS_ENABLED)
+            ->setOrder(Question::POSITION, self::SORT_ORDER_ASC)
+            ->getItems();
+        return $questions;
     }
 }

@@ -17,22 +17,11 @@
 <?php
 $viewModel = $block->getViewModel();
 ?>
-<script>
-    function toggle(id) {
-        var clicked = document.getElementById(id);
-        if(!clicked.classList.contains("visible")) {
-            document.getElementsByClassName('visible')[0].classList.remove('visible');
-            clicked.classList.add('visible');
-        }
-    }
-</script>
-<div class="faq-list">
-    <?php
-    $visibleClass = ' visible';
-    foreach ($viewModel->getQuestions() as $question): ?>
-        <div class="faq-question" onclick="toggle('faq-<?= $question->getId() ?>')"><?= $question->getQuestion() ?></div>
-        <div id="faq-<?= $question->getId() ?>" class="faq-answer<?= $visibleClass ?>"><?= $question->getAnswer() ?></div>
-    <?php
-        $visibleClass = '';
-    endforeach; ?>
+<div class="faq-list"'>
+    <?php foreach ($viewModel->getQuestions() as $question): ?>
+    <div data-mage-init='{"collapsible":{"openedState": "active", "saveState": true}}'>
+        <div class="faq-question" data-role="title"><?= $block->escapeHtml($question->getQuestion()); ?></div>
+        <div class="faq-answer"  data-role="content"><?= $block->escapeHtml($question->getAnswer()); ?></div>
+    </div>
+    <?php endforeach; ?>
 </div>
